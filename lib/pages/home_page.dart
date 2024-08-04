@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../ Battery/connectivity_service.dart';
+import '../services/battery.dart';
+import '../services/connectivity_service.dart';
 import 'main_scaffold.dart';
- // Import the new connectivity page
+
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -30,6 +31,16 @@ class HomePage extends StatelessWidget {
               );
             },
             child: Text('Check Internet Connectivity'),
+          ),
+          SizedBox(height: 20),  // Add some spacing
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BatteryPage()), // Navigate to BatteryPage
+              );
+            },
+            child: Text('Check Battery Status'),
           ),
         ],
       ),
