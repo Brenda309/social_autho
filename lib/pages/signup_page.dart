@@ -11,14 +11,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  // text editing controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  // sign up user method
   void signUpUser() async {
-    // show loading circle
     showDialog(
       context: context,
       builder: (context) {
@@ -28,14 +25,12 @@ class _SignUpPageState extends State<SignUpPage> {
       },
     );
 
-    // check if passwords match
     if (passwordController.text != confirmPasswordController.text) {
       Navigator.pop(context);
       showErrorMessage("Passwords don't match");
       return;
     }
 
-    // try creating the user
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
@@ -48,7 +43,6 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  // error message popup
   void showErrorMessage(String message) {
     showDialog(
       context: context,
@@ -68,8 +62,13 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDarkMode ? Colors.grey[900] : Colors.grey[300];
+    final textColor = isDarkMode ? Colors.grey[300] : Colors.grey[700];
+    final buttonColor = isDarkMode ? Colors.blueAccent : Colors.blue;
+
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -77,67 +76,51 @@ class _SignUpPageState extends State<SignUpPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 50),
-
-                // logo
                 const Icon(
                   Icons.person_add,
                   size: 100,
                 ),
-
                 const SizedBox(height: 50),
-
-                // welcome message
                 Text(
                   'Create a new account',
                   style: TextStyle(
-                    color: Colors.grey[700],
+                    color: textColor,
                     fontSize: 16,
                   ),
                 ),
-
                 const SizedBox(height: 25),
-
-                // email textfield
                 MyTextField(
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
+                  // textColor: textColor!,
                 ),
-
                 const SizedBox(height: 10),
-
-                // password textfield
                 MyTextField(
                   controller: passwordController,
                   hintText: 'Password',
                   obscureText: true,
+                  // textColor: textColor!,
                 ),
-
                 const SizedBox(height: 10),
-
-                // confirm password textfield
                 MyTextField(
                   controller: confirmPasswordController,
                   hintText: 'Confirm Password',
                   obscureText: true,
+                  // textColor: textColor!,
                 ),
-
                 const SizedBox(height: 25),
-
-                // sign up button
                 MyButton(
                   onTap: signUpUser,
+                  color: buttonColor,
                 ),
-
                 const SizedBox(height: 50),
-
-                // already a member? log in now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Already a member?',
-                      style: TextStyle(color: Colors.grey[700]),
+                      style: TextStyle(color: textColor),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
