@@ -41,7 +41,7 @@ dependencies:
   google_sign_in: ^6.2.1
   sign_in_with_apple: ^6.1.1
   shared_preferences: ^2.3.1
-  reachability: ^3.0.0
+  connectivity_plus: ^4.0.1
   battery_plus: ^3.0.0
 
 
